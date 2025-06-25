@@ -4,6 +4,7 @@ from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Shabakkat Team Dashboard", layout="wide")
 
+# الأعمدة المطلوبة
 FIELDS = [
     "PCM ID", "TT ID", "Title", "Site ID", "Alarm status", "Cleared time", "Duration", "Region", "Impact",
     "Fault First Occur Time", "Fault Level", "Received Time",
@@ -63,13 +64,12 @@ def main():
     uploaded_file = st.file_uploader("ارفع ملف Excel للـ PCM (يجب أن يحتوي الأعمدة المطلوبة)", type=["xlsx", "xls"])
     if uploaded_file:
         df = pd.read_excel(uploaded_file)
-        # تأكد من وجود الأعمدة المطلوبة
+        # تأكد من وجود الأعمدة المطلوبة كلها
         for col in FIELDS:
             if col not in df.columns:
                 df[col] = ""
         df = df[FIELDS]
 
-        # Sidebar for filters
         with st.sidebar:
             choice = option_menu(
                 "Sidebar",
